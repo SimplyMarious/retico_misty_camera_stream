@@ -4,6 +4,10 @@
 
 This project integrates the Misty robot's camera streaming capabilities with the Retico framework for incremental processing. The `MistyCameraStreamModule` streams video from the Misty robot, and the `ScreenModule` displays the video feed. The project demonstrates how to use Retico modules to process and display real-time video streams.
 
+## Recommended Python Version
+
+It is recommended to use **Python **3.9**** for this project to ensure compatibility with all dependencies.
+
 ## Installation Guide
 
 Follow these steps to set up the project:

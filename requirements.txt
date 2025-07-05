@@ -1,0 +1,5 @@
+requests
+numpy
+av
+retico_core @ git+https://github.com/retico-team/retico_core.git
+retico_vision @ git+https://github.com/retico-team/retico_vision.git
