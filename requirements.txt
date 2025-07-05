@@ -2,4 +2,3 @@ requests
 numpy
 av
 retico_core @ git+https://github.com/retico-team/retico-core.git
-retico_vision @ git+https://github.com/retico-team/retico-vision.git

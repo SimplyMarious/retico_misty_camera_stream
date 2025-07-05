@@ -6,7 +6,7 @@ This project integrates the Misty robot's camera streaming capabilities with the
 
 ## Recommended Python Version
 
-It is recommended to use **Python **3.9**** for this project to ensure compatibility with all dependencies.
+It is recommended to use **Python 3.9** for this project to ensure compatibility with all dependencies.
 
 ## Installation Guide
 
@@ -15,15 +15,31 @@ Follow these steps to set up the project:
 1. **Clone the Repository**
    Clone this repository to your local machine:
    ```bash
-   git clone <your-repo-url>
-   cd <your-repo-directory>
+   git clone https://github.com/SimplyMarious/retico_misty_camera_stream.git
+   cd retico_misty_camera_stream
    ```
 
 2. **Install Python Requirements**
-   Install the required Python packages, including the `retico_core` and `retico_vision` modules:
+   Install the required Python packages:
    ```bash
    pip install -r requirements.txt
    ```
+
+   **Note**: For `retico-vision`, follow these steps:
+   - Clone the `retico-vision` repository:
+     ```bash
+     git clone https://github.com/retico-team/retico-vision.git
+     ```
+   - Add the path to the cloned repository to your `PYTHONPATH` environment variable:
+     - For Windows (Command Prompt):
+       ```bash
+       set PYTHONPATH=path\to\retico-vision;%PYTHONPATH%
+       ```
+     - For Windows (PowerShell):
+       ```bash
+       $env:PYTHONPATH="path\to\retico-vision;$env:PYTHONPATH"
+       ```
+   Replace `path\to\retico-vision` with the actual path where you cloned the repository.
 
 3. **Set Up the Environment**
    Ensure that the Misty robot is connected to the same network and note its IP address.
@@ -67,5 +83,6 @@ network.stop(misty_camera)
 
 ## Notes
 - Ensure that the Misty robot is powered on and connected to the network.
-- The `retico_core` and `retico_vision` modules are automatically installed via the `requirements.txt` file.
+- The `retico_core` module is automatically installed via the `requirements.txt` file.
+- The `retico_vision` module must be manually cloned and added to the `PYTHONPATH` as described above.
 ```
