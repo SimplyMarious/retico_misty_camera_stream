@@ -1,4 +1,7 @@
 requests
 numpy
 av
+opencv-python
+pillow
+matplotlib
 retico_core @ git+https://github.com/retico-team/retico-core.git
