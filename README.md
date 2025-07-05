@@ -1,0 +1,67 @@
+# Misty Camera Streaming with Retico Framework
+
+## Project Description
+
+This project integrates the Misty robot's camera streaming capabilities with the Retico framework for incremental processing. The `MistyCameraStreamModule` streams video from the Misty robot, and the `ScreenModule` displays the video feed. The project demonstrates how to use Retico modules to process and display real-time video streams.
+
+## Installation Guide
+
+Follow these steps to set up the project:
+
+1. **Clone the Repository**
+   Clone this repository to your local machine:
+   ```bash
+   git clone <your-repo-url>
+   cd <your-repo-directory>
+   ```
+
+2. **Install Python Requirements**
+   Install the required Python packages, including the `retico_core` and `retico_vision` modules:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Set Up the Environment**
+   Ensure that the Misty robot is connected to the same network and note its IP address.
+
+## Example Usage
+
+The following example demonstrates how to use the project to stream video from the Misty robot and display it on the screen:
+
+```python
+import retico_core.network as network
+from retico_screen import ScreenModule
+from misty_camera_stream_module import MistyCameraStreamModule
+
+# Initialize the Misty camera module with the robot's IP and desired settings
+misty_camera = MistyCameraStreamModule(ip="10.10.2.112", res_width=1280, res_height=960, framerate=20)
+
+# Initialize the screen module to display the video feed
+screen = ScreenModule()
+
+# Subscribe the screen module to the Misty camera module
+misty_camera.subscribe(screen)
+
+# Start the Retico network
+network.run(misty_camera)
+print("Running the Misty camera")
+
+# Wait for user input to stop the network
+input()
+
+# Stop the Retico network
+network.stop(misty_camera)
+```
+
+### Steps to Run the Example
+1. Replace `10.10.2.112` with the IP address of your Misty robot.
+2. Run the script:
+   ```bash
+   python main.py
+   ```
+3. Press `Ctrl+C` or provide input to stop the streaming.
+
+## Notes
+- Ensure that the Misty robot is powered on and connected to the network.
+- The `retico_core` and `retico_vision` modules are automatically installed via the `requirements.txt` file.
+```
