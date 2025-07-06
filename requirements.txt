@@ -5,3 +5,4 @@ opencv-python
 pillow
 matplotlib
 retico_core @ git+https://github.com/retico-team/retico-core.git
+retico_screen @ git+https://github.com/DavidC001/retico-screen.git
