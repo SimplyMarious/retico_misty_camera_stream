@@ -1,10 +1,7 @@
-from collections import deque
-import av
 import cv2
 import numpy as np
 import time
 import requests
-import threading
 import signal
 
 from PIL import Image
@@ -40,7 +37,6 @@ class MistyCameraStreamModule(abstract.AbstractProducingModule):
         self.res_height = res_height
         self.framerate = framerate
         self.next_container = None
-        self.queue = deque(maxlen=1)
         signal.signal(signal.SIGINT, self._handle_exit)
         signal.signal(signal.SIGTERM, self._handle_exit)
 
@@ -92,14 +88,6 @@ class MistyCameraStreamModule(abstract.AbstractProducingModule):
             return {"status": "success", "message": response.json()}
         except requests.exceptions.RequestException as e:
             return {"status": "error", "message": str(e)}
-
-    def get_stream_frames_from_camera(self):
-        print("connected, starting stream")
-        stream_path = f'rtsp://{self.ip}:{self.rtsp_port}'
-        self.next_container = av.open(stream_path)
-        for frame in self.next_container.decode(video=0):
-            print("got frame")
-            self.queue.append(frame)
 
     def stop_av_streaming(self):
         """
