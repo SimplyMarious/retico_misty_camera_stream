@@ -1,17 +1,20 @@
 from collections import deque
 import av
+import cv2
 import numpy as np
 import time
 import requests
 import threading
 import signal
 
+from PIL import Image
+
 try:
     import thread
 except ImportError:
     import _thread as thread
 
-from retico_core import abstract
+from retico_core import abstract, UpdateMessage, UpdateType
 from retico_vision import ImageIU
 
 class MistyCameraStreamModule(abstract.AbstractProducingModule):
@@ -29,6 +32,7 @@ class MistyCameraStreamModule(abstract.AbstractProducingModule):
 
     def __init__(self, ip, rtsp_port=1936, res_width=1280, res_height=960, framerate=20, pil=True, **kwargs):
         super().__init__(**kwargs)
+        self.cap = None
         self.pil = pil
         self.ip = ip
         self.rtsp_port = rtsp_port
@@ -44,8 +48,8 @@ class MistyCameraStreamModule(abstract.AbstractProducingModule):
     def test(self):
         print("TEST")
 
-    def process_iu(self, input_iu):
-        pass
+    # def process_iu(self, input_iu):
+    #     pass
 
 
     def enable_av_streaming(self):
@@ -94,21 +98,8 @@ class MistyCameraStreamModule(abstract.AbstractProducingModule):
         stream_path = f'rtsp://{self.ip}:{self.rtsp_port}'
         self.next_container = av.open(stream_path)
         for frame in self.next_container.decode(video=0):
+            print("got frame")
             self.queue.append(frame)
-
-    def process_stream_frames(self):
-        while True:
-            if len(self.queue) == 0:
-                time.sleep(0.001)
-                continue
-            frame = self.queue.popleft()
-            image = frame.to_image()
-            im = image.rotate(270)
-            if not self.pil:
-                im = np.asarray(im)
-            output_iu = self.create_iu(None)
-            output_iu.set_image(im, 1, 1)
-            self.append(abstract.UpdateMessage.from_iu(output_iu, abstract.UpdateType.ADD))
 
     def stop_av_streaming(self):
         """
@@ -136,13 +127,26 @@ class MistyCameraStreamModule(abstract.AbstractProducingModule):
             time.sleep(1)
         print("AV streaming started successfully.")
 
-        av_thread = threading.Thread(target=self.process_stream_frames)
-        av_thread.start()
-        start_video_thread = threading.Thread(target=self.get_stream_frames_from_camera)
-        start_video_thread.start()
+        self.cap = cv2.VideoCapture(f"rtsp://{self.ip}:{self.rtsp_port}/video")
 
-    # def process_update(self, _):
-    #     return None
+
+        # start_video_thread = threading.Thread(target=self.get_stream_frames_from_camera)
+        # start_video_thread.start()
+
+    def process_update(self, _):
+        um = UpdateMessage()
+        ret, frame = self.cap.read()
+        if ret:
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            frame = Image.fromarray(frame)
+            frame = frame.rotate(270)
+            if not self.pil:
+                frame = np.asarray(frame)
+
+            output_iu = self.create_iu()
+            output_iu.set_image(frame, 1, self.framerate)
+            um.add_iu(output_iu, UpdateType.ADD)
+        return um
 
     def _handle_exit(self, signum, frame):
         """
