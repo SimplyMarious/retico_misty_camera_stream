@@ -140,6 +140,7 @@ class MistyCameraStreamModule(abstract.AbstractProducingModule):
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame = Image.fromarray(frame)
             frame = frame.rotate(270)
+            frame = frame.resize((self.res_width, self.res_height))
             if not self.pil:
                 frame = np.asarray(frame)
 
