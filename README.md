@@ -28,7 +28,7 @@ Follow these steps to set up the project:
    **Note**: For `retico-vision`, follow these steps:
    - Clone the `retico-vision` repository:
      ```bash
-     git clone https://github.com/retico-team/retico-vision.git
+     git clone https://github.com/retico-team/retico-vision.git retico_vision
      ```
    - Add the path to the cloned repository to your `PYTHONPATH` environment variable:
      - For Windows (PowerShell):
@@ -77,6 +77,7 @@ network.stop(misty_camera)
 1. Replace `10.10.2.112` with the IP address of your Misty robot.
 2. Run the script:
    ```bash
+   cd retico_misty_camera_stream
    python main.py
    ```
 3. Press `Ctrl+C` or provide input to stop the streaming.
