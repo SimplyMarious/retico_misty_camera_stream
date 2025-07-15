@@ -81,10 +81,8 @@ network.stop(misty_camera)
    ```
 3. Press `Ctrl+C` or provide input to stop the streaming.
 
-## Notes
-- Ensure that the Misty robot is powered on and connected to the network.
-- The `retico_core` module is automatically installed via the `requirements.txt` file.
-- The `retico_vision` module must be manually cloned and added to the `PYTHONPATH` as described above.
-```
+## License
+This project is licensed under the Apache License 2.0. See the `LICENSE` file for details.
 
-
+## Acknowledgments
+- **Retico Framework**: For providing the modular framework for incremental processing.

@@ -40,14 +40,6 @@ class MistyCameraStreamModule(abstract.AbstractProducingModule):
         signal.signal(signal.SIGINT, self._handle_exit)
         signal.signal(signal.SIGTERM, self._handle_exit)
 
-
-    def test(self):
-        print("TEST")
-
-    # def process_iu(self, input_iu):
-    #     pass
-
-
     def enable_av_streaming(self):
         """
         Sends a POST request to enable AV streaming on the robot.
@@ -117,10 +109,6 @@ class MistyCameraStreamModule(abstract.AbstractProducingModule):
 
         self.cap = cv2.VideoCapture(f"rtsp://{self.ip}:{self.rtsp_port}/video")
 
-
-        # start_video_thread = threading.Thread(target=self.get_stream_frames_from_camera)
-        # start_video_thread.start()
-
     def process_update(self, _):
         um = UpdateMessage()
         ret, frame = self.cap.read()
@@ -131,7 +119,6 @@ class MistyCameraStreamModule(abstract.AbstractProducingModule):
             frame = frame.resize((self.res_width, self.res_height))
             if not self.pil:
                 frame = np.asarray(frame)
-
             output_iu = self.create_iu()
             output_iu.set_image(frame, 1, self.framerate)
             um.add_iu(output_iu, UpdateType.ADD)
