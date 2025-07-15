@@ -1,6 +1,6 @@
 # Misty Camera Streaming with Retico Framework
 
-## Project Description
+## Overview
 
 This project integrates the Misty robot's camera streaming capabilities with the Retico framework for incremental processing. The `MistyCameraStreamModule` streams video from the Misty robot, and the `ScreenModule` displays the video feed. The project demonstrates how to use Retico modules to process and display real-time video streams.
 
@@ -15,7 +15,7 @@ Follow these steps to set up the project:
 1. **Clone the Repository**
    Clone this repository to your local machine:
    ```bash
-   git clone https://github.com/SimplyMarious/retico_misty_camera_stream.git
+   git clone https://github.com/SimplyMarious/retico-misty-camera-stream.git retico_misty_camera_stream
    cd retico_misty_camera_stream
    ```
 
@@ -31,15 +31,15 @@ Follow these steps to set up the project:
      git clone https://github.com/retico-team/retico-vision.git
      ```
    - Add the path to the cloned repository to your `PYTHONPATH` environment variable:
-     - For Windows (Command Prompt):
-       ```bash
-       set PYTHONPATH=path\to\retico-vision;%PYTHONPATH%
-       ```
      - For Windows (PowerShell):
-       ```bash
+       ```powershell
        $env:PYTHONPATH="path\to\retico-vision;$env:PYTHONPATH"
        ```
-   Replace `path\to\retico-vision` with the actual path where you cloned the repository.
+     - For Linux bash:
+       ```bash
+       export PYTHONPATH=/path/to/retico-vision:$PYTHONPATH
+       ```
+   Replace `path\to\retico-vision` or `/path/to/retico-vision` with the actual path where you cloned the repository.
 
 3. **Set Up the Environment**
    Ensure that the Misty robot is connected to the same network and note its IP address.
@@ -49,9 +49,9 @@ Follow these steps to set up the project:
 The following example demonstrates how to use the project to stream video from the Misty robot and display it on the screen:
 
 ```python
-import retico_core.network as network
+import retico_misty_camera_stream.retico_core.network as network
 from retico_screen import ScreenModule
-from misty_camera_stream_module import MistyCameraStreamModule
+from retico_misty_camera_stream.misty_camera_stream_module import MistyCameraStreamModule
 
 # Initialize the Misty camera module with the robot's IP and desired settings
 misty_camera = MistyCameraStreamModule(ip="10.10.2.112", res_width=1280, res_height=960, framerate=20)
@@ -86,3 +86,5 @@ network.stop(misty_camera)
 - The `retico_core` module is automatically installed via the `requirements.txt` file.
 - The `retico_vision` module must be manually cloned and added to the `PYTHONPATH` as described above.
 ```
+
+
